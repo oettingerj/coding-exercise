@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Karla:wght@300;400;500;600;700&display=swap');
+$primary: #ff9900;
+$darkPrimary: #be7000;
+$secondary: #2c1037;
+
+html {
+    font-family: 'Karla', sans-serif;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.listFilter {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.dataTable {
+    width: 60%;
+    border-collapse: collapse;
+    margin-top: 20px;
+
+    th, td {
+        border: 1px solid lightgray;
+        padding: 5px;
+    }
+
+    th {
+        position: sticky;
+        top: 0;
+        background-color: $secondary;
+        color: white;
+    }
+}
+
+.selector {
+    margin-left: 20px;
+    display: flex;
+    flex-direction: row;
+    background-color: $primary;
+    border: 1px solid black;
+    border-radius: 50px;
+    overflow: hidden;
+
+    .selectorOption {
+        padding: 10px 20px;
+        border-right: 1px solid black;
+
+        &:hover {
+            background-color: $darkPrimary;
+            cursor: pointer;
+        }
+    }
+
+    .selectorOption:last-child {
+        border-right: none;
+    }
+
+    .selected {
+        background-color: $darkPrimary;
+        color: white;
+    }
+}
