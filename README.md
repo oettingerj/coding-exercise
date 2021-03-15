@@ -2,7 +2,7 @@
 
 To run the site: in the project directory, run `npm install` then `npm start`.
 
-To run tests: use `npm test`.
+To run tests: use `npm test`. If prompted, press `a` to run all tests.
 
 #### A CORS issue
 The CORS configuration in the S3 bucket where hiring.json in stored blocked
