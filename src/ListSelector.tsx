@@ -2,7 +2,7 @@ import React from 'react'
 import './App.scss'
 
 type Props = {
-    options: number[]
+    options: number[],
     onSelect: (selected: number) => void
 }
 type State = {
