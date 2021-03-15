@@ -10,6 +10,7 @@ type Props = {
     data: DataItem[],
     showListIds: boolean
 }
+
 export default class DataTable extends React.Component<Props> {
     /**
      * Return a list of table row elements
