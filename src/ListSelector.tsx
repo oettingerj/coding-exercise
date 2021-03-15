@@ -18,11 +18,18 @@ export default class ListSelector extends React.Component<Props, State> {
         }
     }
 
+    /**
+     * Click handler for list numbers
+     * @param option - the number that was clicked (-1 if "All" was clicked)
+     */
     onSelect(option: number) {
         this.setState({ selected: option })
         this.props.onSelect(option)
     }
 
+    /**
+     * Return a list of button elements to render
+     */
     renderButtons() {
         const buttonList = []
         let className = 'selectorOption'
@@ -30,7 +37,7 @@ export default class ListSelector extends React.Component<Props, State> {
             className = className.concat(' selected')
         }
         buttonList.push(
-            <div onClick={() => this.onSelect(-1)} className={className}> All </div>
+            <button key={-1} onClick={() => this.onSelect(-1)} className={className}> All </button>
         )
 
         for (const option of this.props.options) {
@@ -39,12 +46,15 @@ export default class ListSelector extends React.Component<Props, State> {
                 className = className.concat(' selected')
             }
             buttonList.push(
-                <div
+                <button
+                    key={option}
                     className={className}
                     onClick={() => this.onSelect(option)}
+                    data-testid='selectorButton'
+                    data-listid={option}
                 >
                     {option}
-                </div>
+                </button>
             )
         }
         return buttonList

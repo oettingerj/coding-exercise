@@ -1,6 +1,7 @@
 import React from 'react'
 import './App.scss'
 import ListSelector from './ListSelector'
+import DataTable from './DataTable'
 
 type DataItem = {
     id: number,
@@ -24,10 +25,19 @@ export default class App extends React.Component<Props, State> {
         }
     }
 
-    componentDidMount() {
-        this.fetchData()
+    /**
+     * Called when the App component is mounted; this is when we fetch data from the server
+     */
+    async componentDidMount() {
+        await this.fetchData().catch(error => {
+            console.error(error)
+            alert('An error occurred when fetching data from the server.')
+        })
     }
 
+    /**
+     * Fetch the json file from the server and process it
+     */
     async fetchData() {
         let data = await fetch('https://oettingerj.s3.us-east-2.amazonaws.com/hiring.json')
             .then(response => response.json())
@@ -35,6 +45,11 @@ export default class App extends React.Component<Props, State> {
         this.setState({ filteredData: data, data })
     }
 
+    /**
+     * Filter out null/empty names and sort by listId then name
+     * @param data
+     * @return the filtered/sorted list
+     */
     filterAndSortData(data: DataItem[]): DataItem[] {
         const filteredData = data.filter(item => (item.name !== null && item.name !== ""))
 
@@ -45,10 +60,20 @@ export default class App extends React.Component<Props, State> {
         return filteredData
     }
 
+    /**
+     * Filter data by list id
+     * @param data
+     * @param listId
+     * @return the filtered list
+     */
     filterDataByListId(data: DataItem[], listId: number): DataItem[] {
         return data.filter(item => item.listId === listId)
     }
 
+    /**
+     * Handler for list filter selection
+     * @param option
+     */
     onSelectList = (option: number) => {
         if (option === -1) {
             this.setState({
@@ -64,36 +89,15 @@ export default class App extends React.Component<Props, State> {
         }
     }
 
-    renderTableData() {
-        return this.state.filteredData.map(item => (
-            <tr>
-                {this.state.showListIds ? <td>{item.listId}</td> : null}
-                <td>{item.id}</td>
-                <td>{item.name}</td>
-            </tr>
-        ))
-    }
-
     render() {
         return (
             <div className='container'>
                 <h1>Fetch Data Display</h1>
                 <div className='listFilter'>
                     <h4>Filter by list: </h4>
-                    <ListSelector options={[1,2,3,4]} onSelect={this.onSelectList}/>
+                    <ListSelector options={[1,2,3,4]} onSelect={this.onSelectList} />
                 </div>
-                <table className='dataTable'>
-                    <thead>
-                        <tr>
-                            {this.state.showListIds ? <th>List ID</th> : null}
-                            <th>ID</th>
-                            <th>Name</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {this.renderTableData()}
-                    </tbody>
-                </table>
+                <DataTable data={this.state.filteredData} showListIds={this.state.showListIds} />
             </div>
         )
     }

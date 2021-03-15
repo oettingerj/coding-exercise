@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Karla:wght@300;400;500;600;700&display=swap');
+
 $primary: #ff9900;
-$darkPrimary: #be7000;
 $secondary: #2c1037;
 
 html {
@@ -36,23 +36,29 @@ html {
         background-color: $secondary;
         color: white;
     }
+
+    tr:nth-child(even) {
+        background-color: #f1f1f1;
+    }
 }
 
 .selector {
     margin-left: 20px;
     display: flex;
     flex-direction: row;
-    background-color: $primary;
     border: 1px solid black;
     border-radius: 50px;
     overflow: hidden;
 
     .selectorOption {
+        border: none;
+        border-radius: 0;
+        background-color: white;
         padding: 10px 20px;
         border-right: 1px solid black;
 
         &:hover {
-            background-color: $darkPrimary;
+            background-color: $primary;
             cursor: pointer;
         }
     }
@@ -62,7 +68,6 @@ html {
     }
 
     .selected {
-        background-color: $darkPrimary;
-        color: white;
+        background-color: $primary;
     }
 }
